@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger/dist';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.setGlobalPrefix('api')
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -12,7 +16,14 @@ async function bootstrap() {
     })
   );
 
-  app.setGlobalPrefix('api')
+  const config = new DocumentBuilder()
+    .setTitle('Basic RESTful API')
+    .setDescription('Just a basic RESTful API with the essentials')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(3000);
 }
 bootstrap();
