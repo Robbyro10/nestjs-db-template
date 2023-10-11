@@ -3,7 +3,9 @@
 </p>
 
 
-# Teslo API
+# Nest.js Template
+
+This is a template repository for developing apis using Nest.js, Postgres and Docker.
 
 1. Clone project
 2. ```yarn install```
